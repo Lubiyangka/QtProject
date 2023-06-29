@@ -2,35 +2,61 @@
 #define SNAKE_H
 
 #include <QWidget>
+#include <QKeyEvent>
+#include <QTimer>
+#include <QPointF>
 #include <QPainter>
-//class Snake
+#include "Reword.h"
+enum Direct{
+    DirLeft,
+    DirRight,
+    DirUp,
+    DirDown,
+    Speed
+};
 class Snake : public QWidget
 {
     Q_OBJECT
 public:
     Snake(QWidget *parent = nullptr);
-    //Snake(QWidget *parent=nullptr,int nodeWidth=20,int nodeHeight=20);
-    void addHead(int height);
-    void addDown(int height);
-    void addRight(int width);
-    void addLeft(int width);
+    void setParent(QWidget *parent = nullptr);
+    //蛇
+    void addHead();
+    void addDown();
+    void addRight();
+    void addLeft();
     void deleteTail();
-    bool intersects(QRectF rewordNodeRectF);
+    //碰撞检测
     bool checkContact();
-//    void paintEvent(QPaintEvent *event);
-//    int getNodeWidth();
-//    int getNodeHeight();
-//    void setNodeHeight(int);
-//    void setNodeWidth(int);
-//    void setSnakeSpeed(int);
+    //速度设置
+    void setLimitTime(int);
+    void changeSnakeLength();
+    void setNodeWidthAndHeight(int nodeWidth=20,int nodeHeight=20);
+public slots:
+    void timeout();
+protected:
+    //按键控制
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    //图像加载
+    void paintEvent(QPaintEvent *event);
 private:
+    //键盘隐射
+    int moveFalg;
+    //游戏开始/暂停
+    bool gameFlag=false;
+    //定时器
+    QTimer *timer;
+    int limitTime=100;
+    bool islongPressed=false;
+    int cntTime=0;
+    //蛇
     QList<QRectF> snake;
+    //Snake snaker;
     int nodeWidth=20;
     int nodeHeight=20;
-    int snakeSpeed=100;
-    QWidget * parent;
-signals:
-
+    //果实
+    Reword node;
 };
 
 #endif // SNAKE_H

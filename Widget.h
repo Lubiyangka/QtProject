@@ -13,13 +13,13 @@ namespace Ui { class Widget; }
 QT_END_NAMESPACE
 
 //方向
-enum Direct{
-    DirLeft,
-    DirRight,
-    DirUp,
-    DirDown,
-    Speed
-};
+//enum Direct{
+//    DirLeft,
+//    DirRight,
+//    DirUp,
+//    DirDown,
+//    Speed
+//};
 
 class Widget : public QWidget
 {
@@ -28,41 +28,41 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-    //蛇
-    void addHead();
-    void addDown();
-    void addRight();
-    void addLeft();
-    void deleteTail();
-    //碰撞检测
-    bool checkContact();
-    //速度设置
-    void setLimitTime(int);
+//    //蛇
+//    void addHead();
+//    void addDown();
+//    void addRight();
+//    void addLeft();
+//    void deleteTail();
+//    //碰撞检测
+//    bool checkContact();
+//    //速度设置
+//    void setLimitTime(int);
 public slots:
-    void timeout();
+//    void timeout();
 protected:
-    //按键控制
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
-    //图像加载
-    void paintEvent(QPaintEvent *event);
+//    //按键控制
+//    void keyPressEvent(QKeyEvent *event);
+//    void keyReleaseEvent(QKeyEvent *event);
+//    //图像加载
+//    void paintEvent(QPaintEvent *event);
 private:
     //界面UI
     Ui::Widget *ui;
     //键盘隐射
-    int moveFalg;
-    //游戏开始/暂停
-    bool gameFlag=false;
-    //定时器
-    QTimer *timer;
-    int limitTime=200;
-    bool islongPressed=false;
-    //蛇
-    QList<QRectF> snake;
-    //Snake snaker;
-    int nodeWidth=20;
-    int nodeHeight=20;
-    //果实
-    Reword node;
+//    int moveFalg;
+//    //游戏开始/暂停
+//    bool gameFlag=false;
+//    //定时器
+//    QTimer *timer;
+//    int limitTime=200;
+//    bool islongPressed=false;
+//    //蛇
+//    QList<QRectF> snake;
+     Snake snake;
+//    int nodeWidth=20;
+//    int nodeHeight=20;
+//    //果实
+//    Reword node;
 };
 #endif // WIDGET_H
