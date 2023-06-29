@@ -25,15 +25,13 @@ Widget::Widget(QWidget *parent)
     addHead();
     addHead();
     addHead();
-    addReword();
+    this->node.addReword(nodeWidth,nodeHeight);
 }
 
 Widget::~Widget()
 {
     delete ui;
 }
-
-
 void Widget::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
     case Qt::Key_Up :
@@ -57,9 +55,10 @@ void Widget::keyPressEvent(QKeyEvent *event){
         }
         break;
     case Qt::Key_Space:
-        if(event->isAutoRepeat()){
+        if(event->isAutoRepeat()&&gameFlag){
             this->setLimitTime(10);
             this->timer->start(limitTime);
+            this->islongPressed=true;
         }
         break;
     case Qt::Key_Escape:
@@ -80,8 +79,7 @@ void Widget::keyPressEvent(QKeyEvent *event){
 void Widget::keyReleaseEvent(QKeyEvent *event){
     switch (event->key()) {
     case Qt::Key_Space :
-        if(!event->isAutoRepeat()){
-//              moveFalg=Speed;
+        if(!event->isAutoRepeat()&&islongPressed){
             this->setLimitTime(100);
             this->timer->start(limitTime);
         }
@@ -93,22 +91,30 @@ void Widget::keyReleaseEvent(QKeyEvent *event){
 //启动定时器，关联信号槽，实现对应的槽函数
 void Widget::timeout(){
     int count=1;
-    if(snake[0].intersects(rewordNode)){
+//    if(snaker.intersects(node.getRewordNode())){
+//        count++;
+//        this->node.addReword(nodeWidth,nodeHeight);
+//    }
+    if(snake[0].intersects(node.getRewordNode())){
         count++;
-        addReword();
+        this->node.addReword(nodeWidth,nodeHeight);
     }
     while (count--) {
         switch (moveFalg) {
         case DirUp:
+            //this->snaker.addHead(this->height());
             addHead();
             break;
         case DirDown:
+            //this->snaker.addDown(this->height());
             addDown();
             break;
         case DirRight:
+            //this->snaker.addRight(this->width());
             addRight();
             break;
         case DirLeft:
+            //this->snaker.addLeft(this->width());
             addLeft();
             break;
         default:
@@ -116,6 +122,7 @@ void Widget::timeout(){
         }
     }
     deleteTail();
+    //this->snaker.deleteTail();
     update();
 }
 void Widget::addHead(){
@@ -185,6 +192,10 @@ void Widget::paintEvent(QPaintEvent *event){
     brush.setStyle(Qt::SolidPattern);
     painter.setPen(pen);
     painter.setBrush(brush);
+    //画蛇
+//    for(int i=0;i<this->snaker.getSnakeLength();i++){
+//        painter.drawRect(this->snaker.getNode()[i]);
+//    }
     for(int i=0;i<snake.length();i++){
         painter.drawRect(snake[i]);
     }
@@ -194,7 +205,8 @@ void Widget::paintEvent(QPaintEvent *event){
     brush.setStyle(Qt::SolidPattern);
     painter.setPen(pen);
     painter.setBrush(brush);
-    painter.drawEllipse(rewordNode);
+    //painter.drawEllipse(rewordNode);
+    painter.drawEllipse(node.getRewordNode());
     if(checkContact()){
         QFont font("华文行楷",30,QFont::ExtraLight,false);
         painter.setFont(font);
@@ -205,16 +217,6 @@ void Widget::paintEvent(QPaintEvent *event){
         timer->stop();
     }
     QWidget::paintEvent(event);
-}
-void Widget::addReword(){
-    rewordNode=QRectF(
-                qrand()%(this->width()/20)*20,
-                qrand()%(this->height()/20)*20,
-                nodeWidth,
-                nodeHeight);
-}
-void Widget::addTail(){
-
 }
 bool Widget::checkContact(){
     for(int i=0;i<snake.length();i++){
