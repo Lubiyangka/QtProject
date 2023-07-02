@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/background.png</file>
+        <file>img/bbg1.png</file>
+        <file>img/bbg2.png</file>
+        <file>img/btn-removebg-preview.png</file>
+        <file>img/dan.png</file>
+        <file>img/hp.png</file>
+        <file>img/shuang.png</file>
+        <file>img/switch.png</file>
+        <file>img/title.png</file>
+        <file>img/bbbg.jpg</file>
+        <file>img/buwanl.jpg</file>
+        <file>img/again.jpg</file>
+        <file>img/mainmn.jpg</file>
+        <file>img/pausebg.png</file>
+        <file>img/pbg.jpg</file>
+        <file>img/ctn.jpg</file>
+        <file>img/over.png</file>
+    </qresource>
+    <qresource prefix="/background">
+        <file>img/bc.png</file>
+        <file>img/dessert.png</file>
+        <file>img/exit.png</file>
+        <file>img/menu.png</file>
+        <file>img/return.png</file>
+        <file>img/start.png</file>
+    </qresource>
+</RCC>
